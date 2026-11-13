@@ -1,0 +1,356 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Tokens oficiais (DESIGN.md §19). Variáveis CSS para uso fora das classes
+ * Tailwind — o resto do sistema vive em tailwind.config.ts.
+ */
+:root {
+  /* Backgrounds */
+  --color-bg-primary: #090D18;
+  --color-bg-secondary: #0D1322;
+  --color-surface: #111827;
+  --color-surface-elevated: #172033;
+
+  /* Borders */
+  --color-border: #1E293B;
+  --color-border-hover: #334155;
+
+  /* Brand */
+  --color-primary: #7667F8;
+  --color-primary-hover: #6355E8;
+  --color-secondary: #38BDF8;
+  --color-violet-light: #A78BFA;
+
+  /* Text */
+  --color-text-primary: #F8FAFC;
+  --color-text-secondary: #CBD5E1;
+  --color-text-muted: #94A3B8;
+  --color-text-disabled: #64748B;
+
+  /* Feedback */
+  --color-success: #22C55E;
+  --color-warning: #F59E0B;
+  --color-error: #EF4444;
+  --color-info: #38BDF8;
+
+  /* Gradient */
+  --gradient-brand: linear-gradient(135deg, #7667F8 0%, #6366F1 45%, #38BDF8 100%);
+
+  /* Typography */
+  --font-primary: 'Geist Sans', sans-serif;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+
+  /* Layout */
+  --container-max: 1280px;
+  --container-wide: 1440px;
+
+  /* Motion */
+  --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 180ms;
+  --duration-normal: 250ms;
+  --duration-slow: 500ms;
+}
+
+/*
+ * Base styles — fusão do <body> das referências (desktop: bg-surface-container-lowest,
+ * font-body-md text-body-md text-on-surface, selection bg-primary/on-primary;
+ * mobile: .pt-safe/.pb-safe, reset html/body).
+ */
+@layer base {
+  html,
+  body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+  }
+
+  body {
+    overscroll-behavior: none;
+    @apply min-h-screen bg-surface-container-lowest font-body-md text-body-md text-on-surface;
+  }
+
+  ::selection {
+    background-color: #c6bfff;
+    color: #2700a0;
+  }
+
+  main > :first-child {
+    margin-top: 0 !important;
+  }
+
+  main > :last-child {
+    margin-bottom: 0 !important;
+  }
+}
+
+/*
+ * Workaround: Tailwind v3 registra regras de classe dentro de @layer base como
+ * candidatos on-demand e as remove se a classe não aparecer no content —
+ * fora de @layer o CSS passa sempre. (pt-safe/pb-safe precisam existir
+ * globalmente para o header/drawer da tarefa B.)
+ */
+.pt-safe {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+/*
+ * Porte integral do CSS global da referência mobile-landing-animada.html
+ * (linhas 28-235). Os componentes dependem destas classes EXATAS.
+ */
+#mobile-drawer {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+
+/* Keyframes for Ambient Motion and Micro-interactions */
+@keyframes ambientGlowA {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+    opacity: 0.22;
+  }
+  50% {
+    transform: translate(25px, -18px) scale(1.15);
+    opacity: 0.35;
+  }
+}
+@keyframes ambientGlowB {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+    opacity: 0.18;
+  }
+  50% {
+    transform: translate(-20px, 22px) scale(1.12);
+    opacity: 0.28;
+  }
+}
+@keyframes shimmerMove {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(120%);
+  }
+}
+@keyframes pipelineFlow {
+  0% {
+    stroke-dashoffset: 80;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes lineGlowFlow {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 0% 200%;
+  }
+}
+@keyframes revealUp {
+  0% {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes sheenButton {
+  0% {
+    transform: translateX(-140%) skewX(-20deg);
+  }
+  30%, 100% {
+    transform: translateX(200%) skewX(-20deg);
+  }
+}
+@keyframes liveSignalPing {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(123, 208, 255, 0.6);
+  }
+  70% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 8px rgba(123, 208, 255, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(123, 208, 255, 0);
+  }
+}
+
+.ambient-orb-1 {
+  animation: ambientGlowA 12s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+.ambient-orb-2 {
+  animation: ambientGlowB 15s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+.hero-reveal-1 {
+  animation: revealUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.hero-reveal-2 {
+  animation: revealUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
+}
+.hero-reveal-3 {
+  animation: revealUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.22s both;
+}
+.hero-reveal-4 {
+  animation: revealUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.32s both;
+}
+.hero-reveal-5 {
+  animation: revealUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.42s both;
+}
+
+/*
+ * Scroll reveal (composables/useScrollReveal.ts): `.reveal` = estado inicial,
+ * `.reveal-anim` = revealUp com delay `--reveal-delay`, `.revealed` = final.
+ * A animação é trocada por classe estática no animationend para devolver o
+ * transform aos hovers (.interactive-card etc.).
+ */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+}
+.reveal-anim {
+  animation: revealUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+.reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.pipeline-flow {
+  animation: pipelineFlow 2.5s linear infinite;
+}
+
+
+.interactive-card {
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.interactive-card:hover, .interactive-card:active {
+  transform: translateY(-2px);
+  border-color: rgba(198, 191, 255, 0.35);
+  box-shadow: 0 10px 28px -10px rgba(118, 103, 248, 0.25), 0 0 0 1px rgba(123, 208, 255, 0.15);
+}
+.interactive-card:hover .icon-box, .interactive-card:active .icon-box {
+  transform: scale(1.08) rotate(2deg);
+  background-color: rgba(140, 128, 255, 0.2);
+}
+.icon-box {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.3s ease;
+}
+
+.tech-pill {
+  transition: transform 0.18s ease, background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+  border: 1px solid transparent;
+}
+.tech-pill:hover, .tech-pill:active {
+  transform: translateY(-1px);
+  border-color: rgba(198, 191, 255, 0.4);
+  background-color: #262a36;
+  color: #F8FAFC;
+}
+
+.step-item {
+  transition: all 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.step-item:active {
+  transform: translateX(4px);
+}
+.step-item:active .step-num {
+  transform: scale(1.18);
+  box-shadow: 0 0 16px rgba(140, 128, 255, 0.7);
+}
+
+.btn-sheen {
+  position: relative;
+  overflow: hidden;
+}
+.btn-sheen::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+  animation: sheenButton 4.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.shimmer-bar {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  animation: shimmerMove 2.2s infinite;
+}
+
+.active-nav-dot {
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease;
+}
+
+.live-pulse-badge {
+  animation: liveSignalPing 2.2s infinite;
+}
+
+.timeline-gradient-line {
+  background: linear-gradient(180deg, #c6bfff, #7bd0ff, #8c80ff, #1b1f2b);
+  background-size: 100% 200%;
+  animation: lineGlowFlow 4s linear infinite;
+}
+
+.focus-glow:focus {
+  border-color: #c6bfff;
+  box-shadow: 0 0 0 3px rgba(140, 128, 255, 0.3), inset 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-orb-1, .ambient-orb-2, .hero-reveal-1, .hero-reveal-2, .hero-reveal-3, .hero-reveal-4, .hero-reveal-5,
+  .btn-sheen::after, .shimmer-bar::after, .live-pulse-badge, .timeline-gradient-line, .animate-dash-flow {
+    animation: none !important;
+    transition: none !important;
+  }
+  .interactive-card:hover, .interactive-card:active, .tech-pill:hover, .tech-pill:active, .step-item:active {
+    transform: none !important;
+  }
+  /* Reveals terminam no estado final; animações contínuas param. */
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .reveal-anim, .pipeline-flow,
+  .animate-pulse-glow, .animate-float-slow, .animate-ping, .animate-pulse,
+  .animate-\[marquee_25s_linear_infinite\] {
+    animation: none !important;
+  }
+}

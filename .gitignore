@@ -1,0 +1,14 @@
+﻿AGENTS.md
+node_modules/
+.nuxt/
+.output/
+dist/
+.env
+.env.*
+coverage/
+test-results/
+playwright-report/
+.vercel
+
+
+design/

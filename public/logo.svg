@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 64" fill="none">
+  <defs>
+    <linearGradient id="moraesGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7667F8" />
+      <stop offset="50%" stop-color="#6366F1" />
+      <stop offset="100%" stop-color="#38BDF8" />
+    </linearGradient>
+    <linearGradient id="accentGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="100%" stop-color="#7667F8" />
+    </linearGradient>
+  </defs>
+  <!-- Geometric M Mark: Code brackets & digital architectural node fusion -->
+  <g transform="translate(8, 8)">
+    <!-- Left bracket facet -->
+    <path d="M12 8 L4 24 L12 40" stroke="url(#moraesGrad)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Right bracket facet -->
+    <path d="M36 8 L44 24 L36 40" stroke="url(#accentGlow)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Central architectural chevron / core apex -->
+    <path d="M16 16 L24 30 L32 16" stroke="#F8FAFC" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="24" cy="30" r="2.5" fill="#38BDF8"/>
+    <!-- Connection dots -->
+    <circle cx="12" cy="8" r="2" fill="#7667F8"/>
+    <circle cx="36" cy="8" r="2" fill="#38BDF8"/>
+  </g>
+  <!-- Brand Typography -->
+  <text x="68" y="32" font-family="'Geist', 'Inter', -apple-system, sans-serif" font-size="20" font-weight="700" letter-spacing="-0.02em" fill="#F8FAFC">MORAES</text>
+  <text x="162" y="32" font-family="'Geist', 'Inter', -apple-system, sans-serif" font-size="20" font-weight="300" letter-spacing="0.04em" fill="#94A3B8">TECNOLOGIA</text>
+  <circle cx="154" cy="27" r="1.5" fill="#7667F8"/>
+  <rect x="68" y="40" width="18" height="2" rx="1" fill="url(#moraesGrad)"/>
+  <text x="92" y="43" font-family="'Geist', 'Inter', -apple-system, sans-serif" font-size="9" font-weight="500" letter-spacing="0.14em" fill="#64748B">SOFTWARE &amp; CONSULTING</text>
+</svg>
