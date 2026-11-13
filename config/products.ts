@@ -29,7 +29,7 @@ export const productDemos: ProductDemo[] = [
     image: '/produtos/moraes-imoveis.jpg',
     imageAlt: 'Prévia do sistema de gestão imobiliária (demo Moraes Imóveis)',
     accent: 'primary',
-    demoUrl: 'https://moraes-imoveis.vercel.app',
+    demoUrl: 'https://www.app.imoveis.moraes-tecnologia.com',
   },
   {
     id: 'moraes-agendamento-barbearia',
@@ -42,7 +42,7 @@ export const productDemos: ProductDemo[] = [
     image: '/produtos/moraes-agendamento-barbearia.jpg',
     imageAlt: 'Prévia do sistema de agendamento para barbearias (demo Studio Barber)',
     accent: 'secondary',
-    demoUrl: 'https://agendamentos-moraes-web.vercel.app/?demo=studio-barber',
+    demoUrl: 'https://www.app.agendamentos.moraes-tecnologia.com/?demo=studio-barber',
   },
   {
     id: 'moraes-agendamento-estudio',
@@ -55,7 +55,7 @@ export const productDemos: ProductDemo[] = [
     image: '/produtos/moraes-agendamento-estudio.jpg',
     imageAlt: 'Prévia do sistema de agendamento para estúdios de beleza (demo Essenza Beauty)',
     accent: 'violet',
-    demoUrl: 'https://agendamentos-moraes-web.vercel.app/?demo=essenza-beauty',
+    demoUrl: 'https://www.app.agendamentos.moraes-tecnologia.com/?demo=essenza-beauty',
   },
   {
     id: 'moraes-bebidas',
@@ -68,6 +68,6 @@ export const productDemos: ProductDemo[] = [
     image: '/produtos/moraes-bebidas.jpg',
     imageAlt: 'Prévia do catálogo digital para bebidas (demo Bebidas Moraes)',
     accent: 'tertiary',
-    demoUrl: 'https://bebidas-moraes.vercel.app',
+    demoUrl: 'https://app.bebidas.moraes-tecnologia.com',
   },
 ]

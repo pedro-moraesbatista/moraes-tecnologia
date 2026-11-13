@@ -316,16 +316,16 @@ test.describe('Mobile @mobile (<lg)', () => {
     await gotoLanding(page)
     const produtos = page.locator('#produtos')
     const demos = [
-      { name: 'Sistema de Gestão Imobiliária', href: 'https://moraes-imoveis.vercel.app' },
+      { name: 'Sistema de Gestão Imobiliária', href: 'https://www.app.imoveis.moraes-tecnologia.com' },
       {
         name: 'Sistema para Barbearias',
-        href: 'https://agendamentos-moraes-web.vercel.app/?demo=studio-barber',
+        href: 'https://www.app.agendamentos.moraes-tecnologia.com/?demo=studio-barber',
       },
       {
         name: 'Sistema para Estúdios de Beleza',
-        href: 'https://agendamentos-moraes-web.vercel.app/?demo=essenza-beauty',
+        href: 'https://www.app.agendamentos.moraes-tecnologia.com/?demo=essenza-beauty',
       },
-      { name: 'Catálogo Digital para Bebidas', href: 'https://bebidas-moraes.vercel.app' },
+      { name: 'Catálogo Digital para Bebidas', href: 'https://app.bebidas.moraes-tecnologia.com' },
     ]
     for (const demo of demos) {
       const link = produtos.getByRole('link', { name: `Ver demonstração de ${demo.name}` })
