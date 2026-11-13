@@ -28,7 +28,11 @@ useScrollReveal(section, { stagger: 120 })
               </div>
               <div>
                 <span class="font-body-sm text-[12px] text-text-muted block">E-mail Corporativo</span>
-                <span v-if="site.contact.email" class="font-label-md text-label-md text-text-primary font-semibold">{{ site.contact.email }}</span>
+                <a
+                  v-if="site.contact.email"
+                  class="font-label-md text-label-md text-text-primary font-semibold hover:text-primary transition-colors"
+                  :href="`mailto:${site.contact.email}`"
+                >{{ site.contact.email }}</a>
                 <span v-else class="font-label-md text-label-md text-text-muted font-semibold">A configurar</span>
               </div>
             </div>

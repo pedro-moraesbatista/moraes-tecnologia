@@ -16,13 +16,11 @@ export const site = {
   legalName: 'Moraes Desenvolvimento de Software Sob Encomenda Ltda',
   cnpj: '70.103.391/0001-55',
 
-  // TODO(owner): domínio de produção (ex.: https://moraestecnologia.com.br) —
-  // reabilita canonical absoluto, og:url, JSON-LD e sitemap.
-  url: null as string | null,
+  // Domínio de produção: reabilita canonical absoluto, og:url, JSON-LD e sitemap.
+  url: 'https://moraes-tecnologia.com' as string | null,
 
-  // TODO(owner): e-mail REAL — nunca preencher com dados de exemplo.
   contact: {
-    email: null,
+    email: 'contato@moraes-tecnologia.com',
     whatsapp: '+5583998461353',
     whatsappDisplay: '(83) 99846-1353',
     address: 'Av. Brigadeiro Faria Lima, 1811 — Sala 1119, Jardim Paulistano, São Paulo/SP, CEP 01452-001',

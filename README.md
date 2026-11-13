@@ -30,7 +30,7 @@ SEO otimizado e geração estática (`nuxt generate`) pronta para deploy na Verc
 
 ```
 config/site.ts          # Fonte única de identidade: nome, dados cadastrais, url, contatos, nav
-config/products.ts      # Catálogo de produtos: nome, segmento, resumo, destaques e demoUrl
+config/products.ts      # Catálogo de produtos: nome genérico, categoria, resumo, destaques e demoUrl
 components/
   AppHeader.vue         # Header fixo (blur), nav desktop + indicação de seção ativa
   AppMobileDrawer.vue   # Drawer mobile (focus trap, Esc, backdrop, scroll-lock, foco restaurado)
@@ -85,9 +85,9 @@ Todas foram substituídas por rótulos neutros/qualitativos (estrutura visual pr
 - `148_200 eps` → `StreamMode.RealTime` · `98.4% Eficiência` → *Orquestração distribuída*
 - `Test Coverage >95%` → *Testes automatizados* · `42ms`, `1,842/2,190`, `84%`, `40+`, `Sub-ms` etc. → equivalentes neutros
 
-Contatos de exemplo do Stitch (`contato@moraestecnologia.com.br`, `wa.me/5511999999999`,
-"São Paulo, Brasil") **não são renderizados**: enquanto os campos estiverem `null` em
-`config/site.ts`, a UI mostra o canal como *"A configurar"* (sem link/mailto).
+Contatos reais vêm de `config/site.ts`: `contato@moraes-tecnologia.com` (link `mailto:`),
+WhatsApp `(83) 99846-1353` (`wa.me`) e endereço da Faria Lima. Campo `null` continua sendo a
+forma de desligar um canal: a UI então mostra *"A configurar"* (sem link).
 
 O formulário **nunca simula sucesso**: valida de verdade (mensagens por campo, foco no primeiro
 inválido, `aria-live`) e, com dados válidos, exibe explicitamente que a *integração de envio está
@@ -100,42 +100,37 @@ pendente de configuração* (botão marca "Envio indisponível").
 - Pré-render estático: HTML completo no primeiro byte (rastreável por todos os bots)
 - `useSeoMeta`: title, description (copy aprovada), OG completo, Twitter Card
 - `public/robots.txt` com referência ao sitemap; `sitemap.xml` gerado em build-time
-- JSON-LD (Organization + WebSite) **condicional**: só é emitido quando `site.url` estiver configurado
+- JSON-LD (Organization + WebSite) com `legalName`, `taxID`, endereço e URL de produção
+- Canonical absoluto (`https://moraes-tecnologia.com`) e sitemap com a URL do domínio
 - HTML semântico (header/nav/main/section/footer), skip-link, landmarks, `lang="pt-BR"` no `<html>`
 - Fontes/ícones self-hosted (zero bloqueio de terceiros), preload correto, three.js em chunk lazy
 
 ---
 
-## 🔧 O que ainda falta configurar (pendências do owner)
+## 🔧 O que ainda falta configurar
 
-Tudo o que precisa de informação real está centralizado em **`config/site.ts`**:
+O que depende de informação real está centralizado em **`config/site.ts`** (já preenchido com
+razão social, CNPJ, endereço, WhatsApp, e-mail e domínio de produção):
 
-1. **`site.url`** — domínio de produção (ex.: `https://moraestecnologia.com.br`).
-   Ao definir, habilita automaticamente: `og:url` absoluto, canonical, JSON-LD e sitemap com URL.
-   ⚠️ É a pendência mais importante para SEO.
-2. **`site.contact.email`** — e-mail corporativo real → habilita o card do canal (com `mailto:`)
-   e a coluna Contato do footer.
-3. **`site.contact.whatsapp`** (+ `whatsappDisplay`) — número real → habilita o card WhatsApp
-   e o link "Chamar via WhatsApp" do formulário.
-4. **`site.contact.address`** — cidade/estado reais → linha do footer.
-5. **Backend do formulário** — integrar o `AppContactForm.vue` a um serviço de envio real
+1. **Backend do formulário** — integrar o `AppContactForm.vue` a um serviço de envio real
    (API própria, Formspree, Resend etc.) + anti-spam (honeypot). Hoje o estado pós-validação
    é honesto e bloqueado ("Envio indisponível") até essa integração existir.
-6. **`public/og.png`** — atualmente é o logo provisório; substituir por imagem social
+2. **`public/og.png`** — atualmente é o logo provisório; substituir por imagem social
    1200×630 com copy da marca.
-7. **Deploy Vercel** — criar o projeto na Vercel apontando para o repo (build `nuxt generate`,
-   output `.output/public`); o repositório atual não tem remote — `git remote add origin …` + push
-   quando autorizado (agora o brief exige *sem commits/push*).
-8. **Termos de Uso / Política de Privacidade** — os links do footer foram removidos de propósito
+3. **Termos de Uso / Política de Privacidade** — os links do footer foram removidos de propósito
    (não existem as páginas); ao criar `pages/termos.vue` e `pages/privacidade.vue`, readicionar.
-9. **`favicon.ico`** (opcional) — há `favicon.svg`; um `.ico` cobre browsers antigos.
+4. **`favicon.ico`** (opcional) — há `favicon.svg`; um `.ico` cobre browsers antigos.
+
+## Deploy
+
+- Produção: <https://moraes-tecnologia.com> (Vercel, build `npm run generate` → `.output/public`)
+- Repositório: <https://github.com/pedro-moraesbatista/moraes-tecnologia> (privado)
+- Deploy manual: `vercel deploy --prod --yes`
 
 ## Pendências técnicas conhecidas
 
-- **E2E**: a suíte foi corrigida (scoping por viewport, reveals, selectors, drawer via `aria-hidden`/`inert`)
-  porém a última rodada completa foi interrompida a pedido — rodar `npx playwright test` para
-  evidência atualizada. (Última rodada anterior: 17/45 passando; as demais falhas eram bugs da
-  própria suíte, já corrigidas, não do site.)
+- **E2E**: suíte verde contra o build estático (`npx playwright test`) — 21 passed / 27 skipped
+  (skips são os projetos de viewport que não se aplicam a cada bloco).
 - **Revisão independente (`reviewer`)** não pôde rodar: limite de uso da conta bloqueou subagents
   (reiniciar quando disponível).
 - **Revisão visual humana** recomendada: comparar screenshots do build com as referências em

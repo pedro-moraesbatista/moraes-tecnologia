@@ -43,7 +43,9 @@ const solutions = [
         <div class="space-y-space-sm">
           <h4 class="font-label-md text-label-md text-text-primary uppercase tracking-wider font-semibold">Contato</h4>
           <ul class="space-y-space-xs">
-            <li v-if="site.contact.email"><span class="font-body-sm text-body-sm text-text-muted block">{{ site.contact.email }}</span></li>
+            <li v-if="site.contact.email">
+              <a class="font-body-sm text-body-sm text-text-muted hover:text-text-primary transition-colors block" :href="`mailto:${site.contact.email}`">{{ site.contact.email }}</a>
+            </li>
             <li v-if="site.contact.whatsapp">
               <a
                 class="font-body-sm text-body-sm text-text-muted hover:text-text-primary transition-colors block"

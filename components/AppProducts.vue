@@ -27,8 +27,8 @@ const accents: Record<ProductAccent, { chip: string; border: string; link: strin
   },
 }
 
-function demoLabel(name: string, segment: string | null): string {
-  return `Ver demonstração de ${segment ? `${name} — ${segment}` : name} (abre em nova aba)`
+function demoLabel(name: string): string {
+  return `Ver demonstração de ${name} (abre em nova aba)`
 }
 </script>
 
@@ -75,18 +75,10 @@ function demoLabel(name: string, segment: string | null): string {
               </span>
             </div>
             <h3
-              class="font-headline-lg text-headline-md md:text-headline-lg text-text-primary"
-              :class="product.segment ? 'mb-1' : 'mb-2'"
+              class="font-headline-lg text-headline-md md:text-headline-lg text-text-primary mb-2"
             >
               {{ product.name }}
             </h3>
-            <p
-              v-if="product.segment"
-              class="font-label-sm text-label-sm uppercase tracking-wider mb-2"
-              :class="accents[product.accent].link"
-            >
-              {{ product.segment }}
-            </p>
             <p class="font-body-md text-body-md text-text-muted mb-space-lg">
               {{ product.summary }}
             </p>
@@ -111,7 +103,7 @@ function demoLabel(name: string, segment: string | null): string {
               :href="product.demoUrl"
               target="_blank"
               rel="noopener noreferrer"
-              :aria-label="demoLabel(product.name, product.segment)"
+              :aria-label="demoLabel(product.name)"
             >
               <span>Ver demonstração</span>
               <span class="material-symbols-outlined text-[18px]" aria-hidden="true">open_in_new</span>

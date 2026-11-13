@@ -162,14 +162,30 @@ test.describe('Desktop @desktop (lg+)', () => {
     expect(console_.errors, console_.errors.join('\n')).toEqual([])
   })
 
-  test('contato: endereço real, WhatsApp real e e-mail a configurar', async ({ page }) => {
+  test('contato: endereço, WhatsApp e e-mail reais', async ({ page }) => {
     await gotoLanding(page)
-    await expect(page.locator('#contato').getByText('A configurar')).toHaveCount(1)
-    await expect(page.locator('#contato')).toContainText('Av. Brigadeiro Faria Lima, 1811')
-    await expect(page.locator('#contato')).toContainText('São Paulo/SP')
-    await expect(page.locator('#contato')).toContainText('(83) 99846-1353')
-    await expect(page.locator('#contato a[href^="https://wa.me/5583998461353"]').first()).toBeVisible()
-    await expect(page.locator('#contato a[href^="mailto:"]')).toHaveCount(0)
+    const contato = page.locator('#contato')
+    await expect(contato.getByText('A configurar')).toHaveCount(0)
+    await expect(contato).toContainText('Av. Brigadeiro Faria Lima, 1811')
+    await expect(contato).toContainText('São Paulo/SP')
+    await expect(contato).toContainText('(83) 99846-1353')
+    await expect(contato.locator('a[href^="https://wa.me/5583998461353"]').first()).toBeVisible()
+    await expect(contato.locator('a[href="mailto:contato@moraes-tecnologia.com"]')).toHaveCount(1)
+  })
+
+  test('SEO: canonical, JSON-LD e sitemap no domínio de produção', async ({ page, request }) => {
+    await gotoLanding(page)
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+      'href',
+      'https://moraes-tecnologia.com',
+    )
+    const ld = await page.locator('script[type="application/ld+json"]').first().textContent()
+    const [organizacao] = JSON.parse(ld ?? '[]') as Array<Record<string, unknown>>
+    expect(organizacao.url).toBe('https://moraes-tecnologia.com')
+    expect(organizacao.taxID).toBe('70.103.391/0001-55')
+    const sitemap = await request.get('/sitemap.xml')
+    expect(sitemap.status()).toBe(200)
+    expect(await sitemap.text()).toContain('<loc>https://moraes-tecnologia.com/</loc>')
   })
 
   test('form: validação real, foco no primeiro inválido, estado pendente honesto', async ({ page }) => {
@@ -292,7 +308,7 @@ test.describe('Mobile @mobile (<lg)', () => {
   test('375px sem overflow e telas de conteúdo presentes', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 667 })
     await gotoLanding(page)
-    await expect(page.locator('#produtos')).toContainText('Moraes Imóveis')
+    await expect(page.locator('#produtos')).toContainText('Sistema de Gestão Imobiliária')
     await expectNoHorizontalOverflow(page)
   })
 
@@ -300,16 +316,16 @@ test.describe('Mobile @mobile (<lg)', () => {
     await gotoLanding(page)
     const produtos = page.locator('#produtos')
     const demos = [
-      { name: 'Moraes Imóveis', href: 'https://moraes-imoveis.vercel.app' },
+      { name: 'Sistema de Gestão Imobiliária', href: 'https://moraes-imoveis.vercel.app' },
       {
-        name: 'Moraes Agendamento — Barbearia',
+        name: 'Sistema para Barbearias',
         href: 'https://agendamentos-moraes-web.vercel.app/?demo=studio-barber',
       },
       {
-        name: 'Moraes Agendamento — Estúdio de beleza',
+        name: 'Sistema para Estúdios de Beleza',
         href: 'https://agendamentos-moraes-web.vercel.app/?demo=essenza-beauty',
       },
-      { name: 'Moraes Bebidas', href: 'https://bebidas-moraes.vercel.app' },
+      { name: 'Catálogo Digital para Bebidas', href: 'https://bebidas-moraes.vercel.app' },
     ]
     for (const demo of demos) {
       const link = produtos.getByRole('link', { name: `Ver demonstração de ${demo.name}` })
@@ -317,7 +333,7 @@ test.describe('Mobile @mobile (<lg)', () => {
       await expect(link).toHaveAttribute('href', demo.href)
       await expect(link).toHaveAttribute('target', '_blank')
       await expect(link).toHaveAttribute('rel', /noopener/)
-      await expect(produtos).toContainText(demo.name.split(' — ')[0])
+      await expect(produtos).toContainText(demo.name)
     }
     await produtos.scrollIntoViewIfNeeded()
     const imagens = produtos.locator('article img')
